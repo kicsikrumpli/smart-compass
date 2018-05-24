@@ -20,19 +20,33 @@ class Model {
     Coord& destination;
 };
 
+class Ticker {
+  public:
+    Ticker(): previousTick(0) {}
+
+  private: 
+};
+
+class SerialLogger {
+  public:
+    SerialLogger(Model& model, SoftwareSerial& sserial):
+      model(model),
+      sserial(sserial) {}
+    bool tick();
+  private:
+};
+
 class Compass {
   public:
-    Compass(Model& model, Servo& servo, SoftwareSerial& sserial):
+    Compass(Model& model, Servo& servo):
       model(model), 
-      sserial(sserial), 
       servo(servo),
       previousTick(0) {}
-    void update();
+    bool tick();
   private:
     const unsigned long TEST_INTERVAL = 1000;
     Model& model;
     Servo& servo;
-    SoftwareSerial& sserial;
     unsigned long previousTick;
 };
 
