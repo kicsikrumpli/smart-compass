@@ -1,6 +1,12 @@
+#include <iostream>
+#include "TinyGPS++.h"
+#include "SoftwareSerial.h"
+#include "Servo.h"
+
 #include <SoftwareSerial.h>
 #include <TinyGPS++.h>
- 
+#include <Servo.h>
+
 /*
  * Model, Coord, Angle
  */
@@ -33,7 +39,7 @@ public:
     Angle target;
     TinyGPSPlus& gps;
 private:
-    const int angleThreshold = 2;
+    const int angleThreshold = 4;
     SoftwareSerial& sserial;
     Coord& dest;
     bool encodeNextFromSerial();
@@ -56,22 +62,24 @@ bool Model::encodeNextFromSerial() {
 
 void Model::updateModel() {
     updated = false;
+
     if ( gps.location.isValid() ) {
         target.valid = true;
         int newTargetAngle = (int) gps.courseTo(gps.location.lat(), gps.location.lng(), dest.lat, dest.lon);
         if (abs(newTargetAngle - target.degrees) > angleThreshold) {
             target.degrees = newTargetAngle;
-            updated = updated || gps.location.isUpdated();
+            updated = true;
         }
     } else {
         target.valid = false;
     }
+
     if ( gps.course.isValid() ) {
         course.valid = true;
         int newCourseAngle = (int) gps.course.deg();
         if ( abs(newCourseAngle - course.degrees) > angleThreshold ) {
             course.degrees = newCourseAngle;
-            updated = updated || gps.course.isUpdated();
+            updated = true;
         }
     } else {
         course.valid = false;
@@ -199,7 +207,21 @@ void SerialLogger::logModelTarget(){
 /*
  * Compass
  */
-// ToDo! - add compass code if serial logger is ok
+class Compass : public Ticker {
+public:
+    Compass(Model& model, Servo& servo, unsigned long updateInterval):
+            model(model),
+            servo(servo),
+            Ticker(updateInterval) {};
+    virtual void update();
+private:
+    Model& model;
+    Servo& servo;
+};
+
+void Compass::update() {
+    // ToDo!
+}
 
 /*
  * Globals
@@ -212,11 +234,18 @@ Model model(gps, softwareSerial, destination);
 SerialLogger logger(model, 1000);
 
 void setup() {
-  softwareSerial.begin(9600);
-  Serial.begin(9600);
+    softwareSerial.begin(9600);
+    Serial.begin(9600);
 }
 
 void loop() {
-  model.tick();
-  logger.tick(millis());
+    model.tick();
+    logger.tick(millis());
 }
+
+int main() {
+    setup();
+    while (true)
+        loop();
+}
+
