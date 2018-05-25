@@ -81,28 +81,28 @@ CMakeFiles/sandbox.dir/main.cpp.o.provides: CMakeFiles/sandbox.dir/main.cpp.o.re
 CMakeFiles/sandbox.dir/main.cpp.o.provides.build: CMakeFiles/sandbox.dir/main.cpp.o
 
 
-CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o: CMakeFiles/sandbox.dir/flags.make
-CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o: ../SoftwareSerial.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daniel/Documents/smart-compass/sandbox/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o -c /Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.cpp
+CMakeFiles/sandbox.dir/Serial.cpp.o: CMakeFiles/sandbox.dir/flags.make
+CMakeFiles/sandbox.dir/Serial.cpp.o: ../Serial.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daniel/Documents/smart-compass/sandbox/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/sandbox.dir/Serial.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sandbox.dir/Serial.cpp.o -c /Users/daniel/Documents/smart-compass/sandbox/Serial.cpp
 
-CMakeFiles/sandbox.dir/SoftwareSerial.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sandbox.dir/SoftwareSerial.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.cpp > CMakeFiles/sandbox.dir/SoftwareSerial.cpp.i
+CMakeFiles/sandbox.dir/Serial.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sandbox.dir/Serial.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/daniel/Documents/smart-compass/sandbox/Serial.cpp > CMakeFiles/sandbox.dir/Serial.cpp.i
 
-CMakeFiles/sandbox.dir/SoftwareSerial.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sandbox.dir/SoftwareSerial.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.cpp -o CMakeFiles/sandbox.dir/SoftwareSerial.cpp.s
+CMakeFiles/sandbox.dir/Serial.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sandbox.dir/Serial.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/daniel/Documents/smart-compass/sandbox/Serial.cpp -o CMakeFiles/sandbox.dir/Serial.cpp.s
 
-CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o.requires:
+CMakeFiles/sandbox.dir/Serial.cpp.o.requires:
 
-.PHONY : CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o.requires
+.PHONY : CMakeFiles/sandbox.dir/Serial.cpp.o.requires
 
-CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o.provides: CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o.requires
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o.provides.build
-.PHONY : CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o.provides
+CMakeFiles/sandbox.dir/Serial.cpp.o.provides: CMakeFiles/sandbox.dir/Serial.cpp.o.requires
+	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/Serial.cpp.o.provides.build
+.PHONY : CMakeFiles/sandbox.dir/Serial.cpp.o.provides
 
-CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o.provides.build: CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o
+CMakeFiles/sandbox.dir/Serial.cpp.o.provides.build: CMakeFiles/sandbox.dir/Serial.cpp.o
 
 
 CMakeFiles/sandbox.dir/TinyGPS++.cpp.o: CMakeFiles/sandbox.dir/flags.make
@@ -156,7 +156,7 @@ CMakeFiles/sandbox.dir/Servo.cpp.o.provides.build: CMakeFiles/sandbox.dir/Servo.
 # Object files for target sandbox
 sandbox_OBJECTS = \
 "CMakeFiles/sandbox.dir/main.cpp.o" \
-"CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o" \
+"CMakeFiles/sandbox.dir/Serial.cpp.o" \
 "CMakeFiles/sandbox.dir/TinyGPS++.cpp.o" \
 "CMakeFiles/sandbox.dir/Servo.cpp.o"
 
@@ -164,7 +164,7 @@ sandbox_OBJECTS = \
 sandbox_EXTERNAL_OBJECTS =
 
 sandbox: CMakeFiles/sandbox.dir/main.cpp.o
-sandbox: CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o
+sandbox: CMakeFiles/sandbox.dir/Serial.cpp.o
 sandbox: CMakeFiles/sandbox.dir/TinyGPS++.cpp.o
 sandbox: CMakeFiles/sandbox.dir/Servo.cpp.o
 sandbox: CMakeFiles/sandbox.dir/build.make
@@ -178,7 +178,7 @@ CMakeFiles/sandbox.dir/build: sandbox
 .PHONY : CMakeFiles/sandbox.dir/build
 
 CMakeFiles/sandbox.dir/requires: CMakeFiles/sandbox.dir/main.cpp.o.requires
-CMakeFiles/sandbox.dir/requires: CMakeFiles/sandbox.dir/SoftwareSerial.cpp.o.requires
+CMakeFiles/sandbox.dir/requires: CMakeFiles/sandbox.dir/Serial.cpp.o.requires
 CMakeFiles/sandbox.dir/requires: CMakeFiles/sandbox.dir/TinyGPS++.cpp.o.requires
 CMakeFiles/sandbox.dir/requires: CMakeFiles/sandbox.dir/Servo.cpp.o.requires
 

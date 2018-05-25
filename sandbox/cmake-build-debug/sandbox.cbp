@@ -82,16 +82,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/daniel/Documents/smart-compass/sandbox/Serial.cpp">
+			<Option target="sandbox"/>
+		</Unit>
+		<Unit filename="/Users/daniel/Documents/smart-compass/sandbox/Serial.h">
+			<Option target="sandbox"/>
+		</Unit>
 		<Unit filename="/Users/daniel/Documents/smart-compass/sandbox/Servo.cpp">
 			<Option target="sandbox"/>
 		</Unit>
 		<Unit filename="/Users/daniel/Documents/smart-compass/sandbox/Servo.h">
-			<Option target="sandbox"/>
-		</Unit>
-		<Unit filename="/Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.cpp">
-			<Option target="sandbox"/>
-		</Unit>
-		<Unit filename="/Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.h">
 			<Option target="sandbox"/>
 		</Unit>
 		<Unit filename="/Users/daniel/Documents/smart-compass/sandbox/TinyGPS++.cpp">

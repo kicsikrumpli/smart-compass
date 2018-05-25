@@ -1,5 +1,4 @@
 #include <Servo.h>
-#include <SoftwareSerial.h>
 #include <TinyGPS++.h>
  
 /*
@@ -20,9 +19,8 @@ struct Angle {
 
 class Model {
 public:
-    Model(TinyGPSPlus& gps, SoftwareSerial& sserial, Coord& dest):
+    Model(TinyGPSPlus& gps, Coord& dest):
             gps(gps),
-            sserial(sserial),
             dest(dest) {
         course.valid = false;
         target.valid = false;
@@ -33,7 +31,6 @@ public:
     TinyGPSPlus& gps;
 private:
     const int angleThreshold = 4;
-    SoftwareSerial& sserial;
     Coord& dest;
     bool encodeNextFromSerial();
     void updateModel();
@@ -46,8 +43,8 @@ void Model::tick() {
 }
 
 bool Model::encodeNextFromSerial() {
-    if (sserial.available()) {
-        return gps.encode(sserial.read());
+    if (Serial.available()) {
+        return gps.encode(Serial.read());
     }
     return false;
 }
@@ -100,89 +97,6 @@ bool Ticker::tick(unsigned long millis) {
 }
 
 /*
- * SerialLogger
- */
-class SerialLogger : public Ticker {
-public:
-    SerialLogger(Model& model, unsigned long updateInterval):
-            model(model),
-            Ticker(updateInterval) {};
-    virtual void update();
-private:
-    Model& model;
-    void logGpsTime();
-    void logGpsLocation();
-    void logGpsCourse();
-    void logModelCourse();
-    void logModelTarget();
-};
-
-void SerialLogger::update() {
-    logGpsTime();
-    logGpsLocation();
-    logGpsCourse();
-    logModelCourse();
-    logModelTarget();
-    Serial.println();
-}
-
-void SerialLogger::logGpsTime(){
-    if (model.gps.time.isValid()) {
-        Serial.print(F("T: "));
-        Serial.print(model.gps.time.hour());
-        Serial.print(F(":"));
-        Serial.print(model.gps.time.minute());
-        Serial.print(F(":"));
-        Serial.print(model.gps.time.second());
-        Serial.print(F("| "));
-    } else {
-        Serial.print(F("–Time– | "));
-    }
-}
-
-void SerialLogger::logGpsLocation(){
-    if(model.gps.location.isValid()) {
-        Serial.print(F("L: "));
-        Serial.print(model.gps.location.lat(), 6);
-        Serial.print(F(","));
-        Serial.print(model.gps.location.lng(), 6);
-        Serial.print(F("| "));
-    } else {
-        Serial.print(F("–Location– | "));
-    }
-}
-
-void SerialLogger::logGpsCourse(){
-    if (model.gps.course.isValid()) {
-        Serial.print(F("C: "));
-        Serial.print(model.gps.course.deg(), 6);
-        Serial.print(F("deg |"));
-    } else {
-        Serial.print(F("–Course– | "));
-    }
-}
-
-void SerialLogger::logModelCourse(){
-    if (model.course.valid) {
-        Serial.print(F("MC: "));
-        Serial.print(model.course.degrees);
-        Serial.print(F("deg | "));
-    } else {
-        Serial.print(F("–MC– | "));
-    }
-}
-
-void SerialLogger::logModelTarget(){
-    if (model.target.valid) {
-        Serial.print(F("MT: "));
-        Serial.print(model.target.degrees);
-        Serial.print(F("deg | "));
-    } else {
-        Serial.print(F("–MT–"));
-    }
-}
-
-/*
  * Compass
  */
 class Compass : public Ticker {
@@ -196,16 +110,13 @@ private:
     Model& model;
     Servo& servo;
     int wiggleDirection = 1;
-    const int wiggleAngle = 15;
+    const int wiggleAmplitude = 35;
 };
 
 void Compass::update() {
-    if (model.course.valid && model.target.valid) {
-        servo.write(90 + model.target.degrees - model.target.degrees);
-    } else {
-        servo.write(90 + wiggleDirection * wiggleAngle);
-        wiggleDirection *= -1;
-    }
+    wiggleDirection = -wiggleDirection;
+    int wiggleAngle = 90 + wiggleDirection * wiggleAmplitude;
+    servo.write(wiggleAngle);
 }
 
 /*
@@ -215,19 +126,15 @@ Coord destination(47.486533, 19.074511);
 
 TinyGPSPlus gps;
 Servo servo;
-SoftwareSerial softwareSerial(3, 4);
-Model model(gps, softwareSerial, destination);
-SerialLogger logger(model, 1000);
-Compass compass(model, servo, 1000);
+Model model(gps, destination);
+Compass compass(model, servo, 500);
 
 void setup() {
-  softwareSerial.begin(9600);
   Serial.begin(9600);
-  servo.attach(9);
+  servo.attach(11);
 }
 
 void loop() {
   model.tick();
-  logger.tick(millis());
   compass.tick(millis());
 }

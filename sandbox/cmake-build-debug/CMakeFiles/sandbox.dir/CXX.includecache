@@ -6,17 +6,19 @@
 
 #IncludeRegexTransform: 
 
+/Users/daniel/Documents/smart-compass/sandbox/Serial.cpp
+Serial.h
+/Users/daniel/Documents/smart-compass/sandbox/Serial.h
+
+/Users/daniel/Documents/smart-compass/sandbox/Serial.h
+iostream
+-
+
 /Users/daniel/Documents/smart-compass/sandbox/Servo.cpp
 Servo.h
 /Users/daniel/Documents/smart-compass/sandbox/Servo.h
 
 /Users/daniel/Documents/smart-compass/sandbox/Servo.h
-
-/Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.cpp
-SoftwareSerial.h
-/Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.h
-
-/Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.h
 iostream
 -
 
@@ -31,12 +33,10 @@ iostream
 -
 TinyGPS++.h
 /Users/daniel/Documents/smart-compass/sandbox/TinyGPS++.h
-SoftwareSerial.h
-/Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.h
 Servo.h
 /Users/daniel/Documents/smart-compass/sandbox/Servo.h
-SoftwareSerial.h
--
+Serial.h
+/Users/daniel/Documents/smart-compass/sandbox/Serial.h
 TinyGPS++.h
 -
 Servo.h

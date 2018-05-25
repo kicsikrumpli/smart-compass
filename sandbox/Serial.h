@@ -15,9 +15,9 @@ unsigned long millis() {
     return 0;
 }
 
-class SoftwareSerial {
+class Serial {
 public:
-    SoftwareSerial(char rx, char tx): c('a' - 1), tick(0) {};
+    //Serial(char rx, char tx): c('a' - 1), tick(0) {};
     void begin(int baud) {};
 
     int available() {
@@ -32,26 +32,6 @@ public:
 private:
     char c;
     int tick;
-};
-
-class Serial {
-public:
-    void begin(int baud) {};
-
-    void print(const char * c) {
-        std::cout << c;
-    };
-    void print(int i) {
-        std::cout << i;
-    };
-    void print(double i, int j) {
-        std::cout << i;
-    };
-    void println() {
-        std::cout << std::endl;
-    }
-private:
-
 } Serial;
 
 #endif //SANDBOX_SOFTWARESERIAL_H

@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/daniel/Documents/smart-compass/sandbox
+CMAKE_SOURCE_DIR = /Users/daniel/Documents/smart-compass/untitled
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/daniel/Documents/smart-compass/sandbox/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/daniel/Documents/smart-compass/untitled/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/daniel/Documents/smart-compass/sandbox/cmake-build-debug/CMakeFiles /Users/daniel/Documents/smart-compass/sandbox/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/daniel/Documents/smart-compass/untitled/cmake-build-debug/CMakeFiles /Users/daniel/Documents/smart-compass/untitled/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/daniel/Documents/smart-compass/sandbox/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/daniel/Documents/smart-compass/untitled/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,98 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named sandbox
+# Target rules for targets named untitled
 
 # Build rule for target.
-sandbox: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sandbox
-.PHONY : sandbox
+untitled: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 untitled
+.PHONY : untitled
 
 # fast build rule for target.
-sandbox/fast:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/build
-.PHONY : sandbox/fast
-
-Serial.o: Serial.cpp.o
-
-.PHONY : Serial.o
-
-# target to build an object file
-Serial.cpp.o:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/Serial.cpp.o
-.PHONY : Serial.cpp.o
-
-Serial.i: Serial.cpp.i
-
-.PHONY : Serial.i
-
-# target to preprocess a source file
-Serial.cpp.i:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/Serial.cpp.i
-.PHONY : Serial.cpp.i
-
-Serial.s: Serial.cpp.s
-
-.PHONY : Serial.s
-
-# target to generate assembly for a file
-Serial.cpp.s:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/Serial.cpp.s
-.PHONY : Serial.cpp.s
-
-Servo.o: Servo.cpp.o
-
-.PHONY : Servo.o
-
-# target to build an object file
-Servo.cpp.o:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/Servo.cpp.o
-.PHONY : Servo.cpp.o
-
-Servo.i: Servo.cpp.i
-
-.PHONY : Servo.i
-
-# target to preprocess a source file
-Servo.cpp.i:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/Servo.cpp.i
-.PHONY : Servo.cpp.i
-
-Servo.s: Servo.cpp.s
-
-.PHONY : Servo.s
-
-# target to generate assembly for a file
-Servo.cpp.s:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/Servo.cpp.s
-.PHONY : Servo.cpp.s
-
-TinyGPS++.o: TinyGPS++.cpp.o
-
-.PHONY : TinyGPS++.o
-
-# target to build an object file
-TinyGPS++.cpp.o:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/TinyGPS++.cpp.o
-.PHONY : TinyGPS++.cpp.o
-
-TinyGPS++.i: TinyGPS++.cpp.i
-
-.PHONY : TinyGPS++.i
-
-# target to preprocess a source file
-TinyGPS++.cpp.i:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/TinyGPS++.cpp.i
-.PHONY : TinyGPS++.cpp.i
-
-TinyGPS++.s: TinyGPS++.cpp.s
-
-.PHONY : TinyGPS++.s
-
-# target to generate assembly for a file
-TinyGPS++.cpp.s:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/TinyGPS++.cpp.s
-.PHONY : TinyGPS++.cpp.s
+untitled/fast:
+	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/build
+.PHONY : untitled/fast
 
 main.o: main.cpp.o
 
@@ -210,7 +129,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -219,7 +138,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -228,7 +147,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -239,16 +158,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... sandbox"
-	@echo "... Serial.o"
-	@echo "... Serial.i"
-	@echo "... Serial.s"
-	@echo "... Servo.o"
-	@echo "... Servo.i"
-	@echo "... Servo.s"
-	@echo "... TinyGPS++.o"
-	@echo "... TinyGPS++.i"
-	@echo "... TinyGPS++.s"
+	@echo "... untitled"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
