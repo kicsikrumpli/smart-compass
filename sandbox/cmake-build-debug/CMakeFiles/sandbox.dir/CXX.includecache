@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/daniel/Documents/smart-compass/sandbox/Servo.cpp
+Servo.h
+/Users/daniel/Documents/smart-compass/sandbox/Servo.h
+
+/Users/daniel/Documents/smart-compass/sandbox/Servo.h
+
+/Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.cpp
+SoftwareSerial.h
+/Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.h
+
+/Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.h
+iostream
+-
+
+/Users/daniel/Documents/smart-compass/sandbox/TinyGPS++.cpp
+TinyGPS++.h
+/Users/daniel/Documents/smart-compass/sandbox/TinyGPS++.h
+
+/Users/daniel/Documents/smart-compass/sandbox/TinyGPS++.h
+
+/Users/daniel/Documents/smart-compass/sandbox/main.cpp
+iostream
+-
+TinyGPS++.h
+/Users/daniel/Documents/smart-compass/sandbox/TinyGPS++.h
+SoftwareSerial.h
+/Users/daniel/Documents/smart-compass/sandbox/SoftwareSerial.h
+Servo.h
+/Users/daniel/Documents/smart-compass/sandbox/Servo.h
+SoftwareSerial.h
+-
+TinyGPS++.h
+-
+Servo.h
+-
+

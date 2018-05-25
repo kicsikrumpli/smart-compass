@@ -22,18 +22,16 @@ public:
     Model(TinyGPSPlus& gps, SoftwareSerial& sserial, Coord& dest):
             gps(gps),
             sserial(sserial),
-            dest(dest),
-            updated(false) {
+            dest(dest) {
         course.valid = false;
         target.valid = false;
     };
     void tick();
-    bool updated;
     Angle course;
     Angle target;
     TinyGPSPlus& gps;
 private:
-    const int angleThreshold = 2;
+    const int angleThreshold = 4;
     SoftwareSerial& sserial;
     Coord& dest;
     bool encodeNextFromSerial();
@@ -41,7 +39,6 @@ private:
 };
 
 void Model::tick() {
-    updated = false;
     if (encodeNextFromSerial()) {
         updateModel();
     }
@@ -55,23 +52,21 @@ bool Model::encodeNextFromSerial() {
 }
 
 void Model::updateModel() {
-    updated = false;
     if ( gps.location.isValid() ) {
         target.valid = true;
-        int newTargetAngle = (int) gps.courseTo(gps.location.lat(), gps.location.lng(), dest.lat, dest.lon);
+        int newTargetAngle = (int) (gps.courseTo(gps.location.lat(), gps.location.lng(), dest.lat, dest.lon) + 0.5);
         if (abs(newTargetAngle - target.degrees) > angleThreshold) {
             target.degrees = newTargetAngle;
-            updated = updated || gps.location.isUpdated();
         }
     } else {
         target.valid = false;
     }
+
     if ( gps.course.isValid() ) {
         course.valid = true;
-        int newCourseAngle = (int) gps.course.deg();
+        int newCourseAngle = (int) (gps.course.deg() + 0.5);
         if ( abs(newCourseAngle - course.degrees) > angleThreshold ) {
             course.degrees = newCourseAngle;
-            updated = updated || gps.course.isUpdated();
         }
     } else {
         course.valid = false;
@@ -117,7 +112,6 @@ private:
     void logGpsTime();
     void logGpsLocation();
     void logGpsCourse();
-    void logModelUpdateStatus();
     void logModelCourse();
     void logModelTarget();
 };
@@ -126,7 +120,6 @@ void SerialLogger::update() {
     logGpsTime();
     logGpsLocation();
     logGpsCourse();
-    logModelUpdateStatus();
     logModelCourse();
     logModelTarget();
     Serial.println();
@@ -165,14 +158,6 @@ void SerialLogger::logGpsCourse(){
         Serial.print(F("deg |"));
     } else {
         Serial.print(F("–Course– | "));
-    }
-}
-
-void SerialLogger::logModelUpdateStatus(){
-    if (model.updated) {
-        Serial.print(F("! | "));
-    } else {
-        Serial.print(F("X | "));
     }
 }
 

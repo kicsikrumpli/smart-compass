@@ -3,9 +3,11 @@
 #include "SoftwareSerial.h"
 #include "Servo.h"
 
+/*
 #include <SoftwareSerial.h>
 #include <TinyGPS++.h>
 #include <Servo.h>
+*/
 
 /*
  * Model, Coord, Angle
@@ -28,13 +30,11 @@ public:
     Model(TinyGPSPlus& gps, SoftwareSerial& sserial, Coord& dest):
             gps(gps),
             sserial(sserial),
-            dest(dest),
-            updated(false) {
+            dest(dest) {
         course.valid = false;
         target.valid = false;
     };
     void tick();
-    bool updated;
     Angle course;
     Angle target;
     TinyGPSPlus& gps;
@@ -47,7 +47,6 @@ private:
 };
 
 void Model::tick() {
-    updated = false;
     if (encodeNextFromSerial()) {
         updateModel();
     }
@@ -61,14 +60,11 @@ bool Model::encodeNextFromSerial() {
 }
 
 void Model::updateModel() {
-    updated = false;
-
     if ( gps.location.isValid() ) {
         target.valid = true;
-        int newTargetAngle = (int) gps.courseTo(gps.location.lat(), gps.location.lng(), dest.lat, dest.lon);
+        int newTargetAngle = (int) (gps.courseTo(gps.location.lat(), gps.location.lng(), dest.lat, dest.lon) + 0.5);
         if (abs(newTargetAngle - target.degrees) > angleThreshold) {
             target.degrees = newTargetAngle;
-            updated = true;
         }
     } else {
         target.valid = false;
@@ -76,10 +72,9 @@ void Model::updateModel() {
 
     if ( gps.course.isValid() ) {
         course.valid = true;
-        int newCourseAngle = (int) gps.course.deg();
+        int newCourseAngle = (int) (gps.course.deg() + 0.5);
         if ( abs(newCourseAngle - course.degrees) > angleThreshold ) {
             course.degrees = newCourseAngle;
-            updated = true;
         }
     } else {
         course.valid = false;
@@ -91,7 +86,7 @@ void Model::updateModel() {
  */
 class Ticker {
 public:
-    Ticker(unsigned long updateInterval):
+    explicit Ticker(unsigned long updateInterval):
             prevMillis(0),
             interval(updateInterval) {};
     bool tick(unsigned long millis);
@@ -125,7 +120,6 @@ private:
     void logGpsTime();
     void logGpsLocation();
     void logGpsCourse();
-    void logModelUpdateStatus();
     void logModelCourse();
     void logModelTarget();
 };
@@ -134,7 +128,6 @@ void SerialLogger::update() {
     logGpsTime();
     logGpsLocation();
     logGpsCourse();
-    logModelUpdateStatus();
     logModelCourse();
     logModelTarget();
     Serial.println();
@@ -173,14 +166,6 @@ void SerialLogger::logGpsCourse(){
         Serial.print(F("deg |"));
     } else {
         Serial.print(F("–Course– | "));
-    }
-}
-
-void SerialLogger::logModelUpdateStatus(){
-    if (model.updated) {
-        Serial.print(F("! | "));
-    } else {
-        Serial.print(F("X | "));
     }
 }
 

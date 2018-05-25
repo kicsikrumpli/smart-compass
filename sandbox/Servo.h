@@ -5,6 +5,8 @@
 #ifndef SANDBOX_SERVO_H
 #define SANDBOX_SERVO_H
 
+#include <iostream>
+
 class Servo {
 public:
     void attach(int pin) {
