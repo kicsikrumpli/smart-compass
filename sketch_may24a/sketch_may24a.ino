@@ -1,3 +1,4 @@
+#include <Servo.h>
 #include <SoftwareSerial.h>
 #include <TinyGPS++.h>
  
@@ -184,7 +185,28 @@ void SerialLogger::logModelTarget(){
 /*
  * Compass
  */
-// ToDo! - add compass code if serial logger is ok
+class Compass : public Ticker {
+public:
+    Compass(Model& model, Servo& servo, unsigned long updateInterval):
+            model(model),
+            servo(servo),
+            Ticker(updateInterval) {};
+    virtual void update();
+private:
+    Model& model;
+    Servo& servo;
+    int wiggleDirection = 1;
+    const int wiggleAngle = 15;
+};
+
+void Compass::update() {
+    if (model.course.valid && model.target.valid) {
+        servo.write(90 + model.target.degrees - model.target.degrees);
+    } else {
+        servo.write(90 + wiggleDirection * wiggleAngle);
+        wiggleDirection *= -1;
+    }
+}
 
 /*
  * Globals
@@ -192,16 +214,20 @@ void SerialLogger::logModelTarget(){
 Coord destination(47.486533, 19.074511);
 
 TinyGPSPlus gps;
+Servo servo;
 SoftwareSerial softwareSerial(3, 4);
 Model model(gps, softwareSerial, destination);
 SerialLogger logger(model, 1000);
+Compass compass(model, servo, 1000);
 
 void setup() {
   softwareSerial.begin(9600);
   Serial.begin(9600);
+  servo.attach(9);
 }
 
 void loop() {
   model.tick();
   logger.tick(millis());
+  compass.tick(millis());
 }
