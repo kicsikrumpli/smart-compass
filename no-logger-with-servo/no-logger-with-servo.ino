@@ -1,6 +1,6 @@
-t#include <Servo.h>
+#include <Servo.h>
 #include <TinyGPS++.h>
- 
+
 /*
  * Model, Coord, Angle
  */
@@ -111,17 +111,31 @@ private:
     Servo& servo;
     int wiggleDirection = 1;
     const int wiggleAmplitude = 35;
+    const int servoMaxAngle = 170;
+    bool isClockReady();
+    bool isCourseReady();
 };
 
 void Compass::update() {
-    if (model.target.valid && model.course.valid) {
-        int angle = (90 + model.target.degrees - model.target.degrees) % 360;
-        angle = min(170, angle);
-        servo.write(angle);
+    if (isClockReady() && isCourseReady() ) {
+        int servoAngle = (450 - (model.target.degrees - model.course.degrees)) % 360;
+        if (servoAngle > servoMaxAngle) {
+          servoAngle = servoMaxAngle;
+        }
+        servo.write(servoAngle);
     } else {
         wiggleDirection = -wiggleDirection;
-        servo.write(90 + wiggleDirection * wiggleAmplitude);
+        int wiggleAngle = 90 + wiggleDirection * wiggleAmplitude;
+        servo.write(wiggleAngle);
     }
+}
+
+bool Compass::isClockReady() {
+  return !(model.gps.date.year() == 2000 && model.gps.date.month() == 0 && model.gps.date.day() == 0);
+}
+
+bool Compass::isCourseReady() {
+  return (model.gps.course.isValid() && model.gps.location.isValid());
 }
 
 /*
@@ -135,11 +149,12 @@ Model model(gps, destination);
 Compass compass(model, servo, 500);
 
 void setup() {
-  Serial.begin(9600);
-  servo.attach(11);
+    Serial.begin(9600);
+    servo.attach(11);
 }
 
 void loop() {
-  model.tick();
-  compass.tick(millis());
+    model.tick();
+    compass.tick(millis());
 }
+

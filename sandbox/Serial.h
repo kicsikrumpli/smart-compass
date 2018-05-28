@@ -17,7 +17,30 @@ unsigned long millis() {
 
 class Serial {
 public:
-    //Serial(char rx, char tx): c('a' - 1), tick(0) {};
+    void begin(int baud) {};
+
+    int available() {
+        tick ++;
+        return tick % 10;
+    };
+
+    char read() {
+        c = (char) (c - 'a' + 1) % ('z' - 'a') + 'a';
+        return c;
+    };
+
+    void print(const char * c) {};
+    void print(int i) {};
+    void println() {};
+
+private:
+    char c;
+    int tick;
+} Serial;
+
+class SoftwareSerial {
+public:
+    SoftwareSerial(char rx, char tx): c('a' - 1), tick(0) {};
     void begin(int baud) {};
 
     int available() {
@@ -32,6 +55,6 @@ public:
 private:
     char c;
     int tick;
-} Serial;
+};
 
 #endif //SANDBOX_SOFTWARESERIAL_H

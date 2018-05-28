@@ -1,12 +1,6 @@
-#include <iostream>
-#include "TinyGPS++.h"
-#include "Servo.h"
-#include "Serial.h"
-
-/*
-#include <TinyGPS++.h>
 #include <Servo.h>
-*/
+#include <SoftwareSerial.h>
+#include <TinyGPS++.h>
 
 /*
  * Model, Coord, Angle
@@ -132,9 +126,19 @@ private:
 };
 
 void Compass::update() {
-    if (model.target.valid && model.course.valid) {
-        int servoAngle = 450 - (model.target.degrees - model.target.degrees) % 360;
-        servoAngle = min(servoMaxAngle, servoAngle);
+    if (model.gps.course.isValid() && model.gps.location.isValid()) {
+        int servoAngle = (450 - (model.target.degrees - model.course.degrees)) % 360;
+        //servoAngle = min(servoMaxAngle, servoAngle);
+        if (servoAngle > servoMaxAngle) {
+          servoAngle = servoMaxAngle;
+          Serial.println();
+          Serial.print(F("*"));
+        }
+        Serial.println();
+        Serial.print(F("model.target.degrees "));
+        Serial.print(model.target.degrees);
+        Serial.print(F(" model.course.degrees "));
+        Serial.print(model.course.degrees);
         Serial.println();
         Serial.print(F("Angle: "));
         Serial.print(servoAngle);
@@ -164,17 +168,27 @@ void SerialLogger::update() {
     if (model.gps.date.year() == 2000 && model.gps.date.month() == 0 && model.gps.date.day() == 0) {
         Serial.print(F("No clock "));
     } else {
-        Serial.print(F("Clock OK "));
+        Serial.print(model.gps.date.year());
+        Serial.print(F("/"));
+        Serial.print(model.gps.date.month());
+        Serial.print(F("/"));
+        Serial.print(model.gps.date.day());
+        Serial.print(F(" "));
     }
     if (!model.gps.course.isValid()) {
         Serial.print("No course ");
     } else {
-        Serial.print(F("Course OK "));
+        Serial.print(F("C: "));
+        Serial.print(model.gps.course.deg());
+        Serial.print(F(" "));
     }
     if (!model.gps.location.isValid()) {
         Serial.print(F("No Location "));
     } else {
-        Serial.print(F("Location OK "));
+        Serial.print(F("L: "));
+        Serial.print(model.gps.location.lat());
+        Serial.print(F(","));
+        Serial.print(model.gps.location.lng());
     }
 }
 
@@ -202,11 +216,5 @@ void loop() {
     model.tick();
     compass.tick(millis());
     logger.tick(millis());
-}
-
-int main() {
-    setup();
-    while (true)
-        loop();
 }
 

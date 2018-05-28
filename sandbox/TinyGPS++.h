@@ -5,6 +5,8 @@
 #ifndef SANDBOX_TINYGPSPLUS_H
 #define SANDBOX_TINYGPSPLUS_H
 
+int min(int a, int b) { return a; }
+
 class TinyGPSPlus {
 public:
     TinyGPSPlus(): tick(0) {};
@@ -35,6 +37,12 @@ public:
         int minute() { return 10; }
         int second() { return 30; }
     } time;
+
+    struct date {
+        int year() { return 2000; }
+        int month() { return 0; }
+        int day() { return 0; }
+    } date;
 
     double courseTo(double lat1, double lon1, double lat2, double lon2) {
         return 10.0;
