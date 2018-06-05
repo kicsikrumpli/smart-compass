@@ -26,12 +26,9 @@ struct Angle {
 
 class Model {
 public:
-    // ToDo! remove sserial
-    Model(TinyGPSPlus& gps, SoftwareSerial& sserial, Coord& dest):
+    Model(TinyGPSPlus& gps, Coord& dest):
             gps(gps),
-            dest(dest),
-            // ToDo! remove sserial
-            sserial(sserial) {
+            dest(dest) {
         course.valid = false;
         target.valid = false;
     };
@@ -39,8 +36,6 @@ public:
     Angle course;
     Angle target;
     TinyGPSPlus& gps;
-    // ToDo! remove sserial when done
-    SoftwareSerial& sserial;
 private:
     const int angleThreshold = 4;
     Coord& dest;
@@ -55,13 +50,8 @@ void Model::tick() {
 }
 
 bool Model::encodeNextFromSerial() {
-    /*
     if (Serial.available()) {
         return gps.encode(Serial.read());
-    }
-     */
-    if (sserial.available()) {
-        return gps.encode(sserial.read());
     }
     return false;
 }
@@ -129,53 +119,30 @@ private:
     int wiggleDirection = 1;
     const int wiggleAmplitude = 35;
     const int servoMaxAngle = 170;
+    bool isClockReady();
+    bool isCourseReady();
 };
 
 void Compass::update() {
-    if (model.target.valid && model.course.valid) {
-        int servoAngle = 450 - (model.target.degrees - model.target.degrees) % 360;
-        servoAngle = min(servoMaxAngle, servoAngle);
-        Serial.println();
-        Serial.print(F("Angle: "));
-        Serial.print(servoAngle);
-        // servo.write(angle);
+    if (isClockReady() && isCourseReady() ) {
+        int servoAngle = (450 - (model.target.degrees - model.course.degrees)) % 360;
+        if (servoAngle > servoMaxAngle) {
+            servoAngle = servoMaxAngle;
+        }
+        servo.write(servoAngle);
     } else {
         wiggleDirection = -wiggleDirection;
         int wiggleAngle = 90 + wiggleDirection * wiggleAmplitude;
-        Serial.println();
-        Serial.print(F("Wiggle: "));
-        Serial.print(wiggleAngle);
-        //servo.write(wiggleAngle);
+        servo.write(wiggleAngle);
     }
 }
 
-class SerialLogger : public Ticker {
-public:
-    SerialLogger(Model& model, unsigned long updateInterval):
-            model(model),
-            Ticker(updateInterval) {};
-    virtual void update();
-private:
-    Model& model;
-};
+bool Compass::isClockReady() {
+    return !(model.gps.date.year() == 2000 && model.gps.date.month() == 0 && model.gps.date.day() == 0);
+}
 
-void SerialLogger::update() {
-    Serial.println();
-    if (model.gps.date.year() == 2000 && model.gps.date.month() == 0 && model.gps.date.day() == 0) {
-        Serial.print(F("No clock "));
-    } else {
-        Serial.print(F("Clock OK "));
-    }
-    if (!model.gps.course.isValid()) {
-        Serial.print("No course ");
-    } else {
-        Serial.print(F("Course OK "));
-    }
-    if (!model.gps.location.isValid()) {
-        Serial.print(F("No Location "));
-    } else {
-        Serial.print(F("Location OK "));
-    }
+bool Compass::isCourseReady() {
+    return (model.gps.course.isValid() && model.gps.location.isValid());
 }
 
 /*
@@ -185,23 +152,17 @@ Coord destination(47.486533, 19.074511);
 
 TinyGPSPlus gps;
 Servo servo;
-// ToDo! remove sserial
-SoftwareSerial sserial(3,4);
-Model model(gps, sserial, destination);
+Model model(gps, destination);
 Compass compass(model, servo, 500);
-SerialLogger logger(model, 1000);
 
 void setup() {
     Serial.begin(9600);
-    // ToDo! remove sserial
-    sserial.begin(9600);
-    //servo.attach(11);
+    servo.attach(11);
 }
 
 void loop() {
     model.tick();
     compass.tick(millis());
-    logger.tick(millis());
 }
 
 int main() {
