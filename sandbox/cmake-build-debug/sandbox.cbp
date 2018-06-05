@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/daniel/Documents/smart-compass/sandbox/Adafruit_LSM303_Mag_Unified.cpp">
+			<Option target="sandbox"/>
+		</Unit>
+		<Unit filename="/Users/daniel/Documents/smart-compass/sandbox/Adafruit_LSM303_Mag_Unified.h">
+			<Option target="sandbox"/>
+		</Unit>
 		<Unit filename="/Users/daniel/Documents/smart-compass/sandbox/Serial.cpp">
 			<Option target="sandbox"/>
 		</Unit>

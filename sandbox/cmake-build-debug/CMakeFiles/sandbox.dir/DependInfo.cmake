@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/daniel/Documents/smart-compass/sandbox/Adafruit_LSM303_Mag_Unified.cpp" "/Users/daniel/Documents/smart-compass/sandbox/cmake-build-debug/CMakeFiles/sandbox.dir/Adafruit_LSM303_Mag_Unified.cpp.o"
   "/Users/daniel/Documents/smart-compass/sandbox/Serial.cpp" "/Users/daniel/Documents/smart-compass/sandbox/cmake-build-debug/CMakeFiles/sandbox.dir/Serial.cpp.o"
   "/Users/daniel/Documents/smart-compass/sandbox/Servo.cpp" "/Users/daniel/Documents/smart-compass/sandbox/cmake-build-debug/CMakeFiles/sandbox.dir/Servo.cpp.o"
   "/Users/daniel/Documents/smart-compass/sandbox/TinyGPS++.cpp" "/Users/daniel/Documents/smart-compass/sandbox/cmake-build-debug/CMakeFiles/sandbox.dir/TinyGPS++.cpp.o"

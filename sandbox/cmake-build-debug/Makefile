@@ -123,6 +123,33 @@ sandbox/fast:
 	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/build
 .PHONY : sandbox/fast
 
+Adafruit_LSM303_Mag_Unified.o: Adafruit_LSM303_Mag_Unified.cpp.o
+
+.PHONY : Adafruit_LSM303_Mag_Unified.o
+
+# target to build an object file
+Adafruit_LSM303_Mag_Unified.cpp.o:
+	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/Adafruit_LSM303_Mag_Unified.cpp.o
+.PHONY : Adafruit_LSM303_Mag_Unified.cpp.o
+
+Adafruit_LSM303_Mag_Unified.i: Adafruit_LSM303_Mag_Unified.cpp.i
+
+.PHONY : Adafruit_LSM303_Mag_Unified.i
+
+# target to preprocess a source file
+Adafruit_LSM303_Mag_Unified.cpp.i:
+	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/Adafruit_LSM303_Mag_Unified.cpp.i
+.PHONY : Adafruit_LSM303_Mag_Unified.cpp.i
+
+Adafruit_LSM303_Mag_Unified.s: Adafruit_LSM303_Mag_Unified.cpp.s
+
+.PHONY : Adafruit_LSM303_Mag_Unified.s
+
+# target to generate assembly for a file
+Adafruit_LSM303_Mag_Unified.cpp.s:
+	$(MAKE) -f CMakeFiles/sandbox.dir/build.make CMakeFiles/sandbox.dir/Adafruit_LSM303_Mag_Unified.cpp.s
+.PHONY : Adafruit_LSM303_Mag_Unified.cpp.s
+
 Serial.o: Serial.cpp.o
 
 .PHONY : Serial.o
@@ -240,6 +267,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... sandbox"
+	@echo "... Adafruit_LSM303_Mag_Unified.o"
+	@echo "... Adafruit_LSM303_Mag_Unified.i"
+	@echo "... Adafruit_LSM303_Mag_Unified.s"
 	@echo "... Serial.o"
 	@echo "... Serial.i"
 	@echo "... Serial.s"

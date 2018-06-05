@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/sandbox.dir/Serial.cpp.o"
   "CMakeFiles/sandbox.dir/TinyGPS++.cpp.o"
   "CMakeFiles/sandbox.dir/Servo.cpp.o"
+  "CMakeFiles/sandbox.dir/Adafruit_LSM303_Mag_Unified.cpp.o"
   "sandbox.pdb"
   "sandbox"
 )
