@@ -27,7 +27,7 @@
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="457">
-              <caret line="78" column="9" lean-forward="true" selection-start-line="78" selection-start-column="9" selection-end-line="78" selection-end-column="9" />
+              <caret line="78" column="9" lean-forward="true" selection-end-line="187" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -220,7 +220,7 @@
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="457">
-          <caret line="78" column="9" lean-forward="true" selection-start-line="78" selection-start-column="9" selection-end-line="78" selection-end-column="9" />
+          <caret line="78" column="9" lean-forward="true" selection-end-line="187" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

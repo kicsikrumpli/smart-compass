@@ -1,9 +1,13 @@
 #include <Wire.h>
-//#include <Adafruit_Sensor.h>
 #include <Adafruit_LSM303_U.h>
+#include <TinyGPS++.h>
 
 /* Assign a unique ID to this sensor at the same time */
 Adafruit_LSM303_Mag_Unified mag = Adafruit_LSM303_Mag_Unified(12345);
+
+// statue of liberty 47.486681, 19.048306
+// corner office 47.486533, 19.074511
+TinyGPSPlus gps;
 
 void setup(void) 
 {
@@ -25,17 +29,18 @@ void loop(void)
   sensors_event_t event; 
   mag.getEvent(&event);
   
-  float Pi = 3.14159;
-  
-  // Calculate the angle of the vector y,x
-  float heading = (atan2(event.magnetic.y,event.magnetic.x) * 180) / Pi;
-  
-  // Normalize to 0-360
-  if (heading < 0)
-  {
-    heading = 360 + heading;
-  }
-  Serial.print("Compass Heading: ");
-  Serial.println(heading);
+  int newCourseAngle = (int) (atan2(event.magnetic.y,event.magnetic.x) * 180 / PI + 0.5);
+  int newTargetAngle = (int) (gps.courseTo(47.486533, 19.074511, 47.486681, 19.048306) + 0.5);
+
+  int servoAngle = (450 - (newTargetAngle - newCourseAngle)) % 360;
+
+  Serial.println();
+  Serial.print(F("heading: "));
+  Serial.print(newCourseAngle);
+  Serial.print(F(" | target: "));
+  Serial.print(newTargetAngle);
+  Serial.print(F(" | servo: "));
+  Serial.print(servoAngle);
+
   delay(500);
 }

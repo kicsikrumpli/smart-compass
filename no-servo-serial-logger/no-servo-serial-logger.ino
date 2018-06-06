@@ -1,6 +1,8 @@
-#include <Servo.h>
 #include <SoftwareSerial.h>
 #include <TinyGPS++.h>
+#include <Servo.h>
+#include <Wire.h>
+#include <Adafruit_LSM303_U.h>
 
 /*
  * Model, Coord, Angle
@@ -21,9 +23,10 @@ struct Angle {
 class Model {
 public:
     // ToDo! remove sserial
-    Model(TinyGPSPlus& gps, SoftwareSerial& sserial, Coord& dest):
+    Model(TinyGPSPlus& gps, SoftwareSerial& sserial, Adafruit_LSM303_Mag_Unified& magnetometer, Coord& dest):
             gps(gps),
             dest(dest),
+            magnetometer(magnetometer),
             // ToDo! remove sserial
             sserial(sserial) {
         course.valid = false;
@@ -33,34 +36,39 @@ public:
     Angle course;
     Angle target;
     TinyGPSPlus& gps;
+    Adafruit_LSM303_Mag_Unified& magnetometer;
     // ToDo! remove sserial when done
     SoftwareSerial& sserial;
 private:
     const int angleThreshold = 4;
+    
+    sensors_event_t event;
     Coord& dest;
-    bool encodeNextFromSerial();
+
+    void readSensors();
     void updateModel();
+    void updateLocation();
+    void updateHeading();
 };
 
 void Model::tick() {
-    if (encodeNextFromSerial()) {
-        updateModel();
-    }
+    readSensors();
+    updateModel();
 }
 
-bool Model::encodeNextFromSerial() {
-    /*
+void Model::readSensors() {
     if (Serial.available()) {
-        return gps.encode(Serial.read());
+        gps.encode(Serial.read());
     }
-     */
-    if (sserial.available()) {
-        return gps.encode(sserial.read());
-    }
-    return false;
+    magnetometer.getEvent(&event);
 }
 
 void Model::updateModel() {
+    updateLocation();
+    updateHeading();
+}
+
+void Model::updateLocation() {
     if ( gps.location.isValid() ) {
         target.valid = true;
         int newTargetAngle = (int) (gps.courseTo(gps.location.lat(), gps.location.lng(), dest.lat, dest.lon) + 0.5);
@@ -70,16 +78,15 @@ void Model::updateModel() {
     } else {
         target.valid = false;
     }
+}
 
-    if ( gps.course.isValid() ) {
-        course.valid = true;
-        int newCourseAngle = (int) (gps.course.deg() + 0.5);
-        if ( abs(newCourseAngle - course.degrees) > angleThreshold ) {
-            course.degrees = newCourseAngle;
-        }
-    } else {
-        course.valid = false;
+void Model::updateHeading() {
+    int newCourseAngle = (int) ((atan2(event.magnetic.y,event.magnetic.x) * 180) / PI + 0.5);
+    newCourseAngle = (newCourseAngle + 360) % 360;
+    if ( abs(newCourseAngle - course.degrees) > angleThreshold ) {
+        course.degrees = newCourseAngle;
     }
+    course.valid = true;
 }
 
 /*
@@ -175,13 +182,6 @@ void SerialLogger::update() {
         Serial.print(model.gps.date.day());
         Serial.print(F(" "));
     }
-    if (!model.gps.course.isValid()) {
-        Serial.print("No course ");
-    } else {
-        Serial.print(F("C: "));
-        Serial.print(model.gps.course.deg());
-        Serial.print(F(" "));
-    }
     if (!model.gps.location.isValid()) {
         Serial.print(F("No Location "));
     } else {
@@ -189,7 +189,7 @@ void SerialLogger::update() {
         Serial.print(model.gps.location.lat());
         Serial.print(F(","));
         Serial.print(model.gps.location.lng());
-    }
+    }   
 }
 
 /*
@@ -199,9 +199,10 @@ Coord destination(47.486533, 19.074511);
 
 TinyGPSPlus gps;
 Servo servo;
+Adafruit_LSM303_Mag_Unified magnetometer(12345);
 // ToDo! remove sserial
 SoftwareSerial sserial(3,4);
-Model model(gps, sserial, destination);
+Model model(gps, sserial, magnetometer, destination);
 Compass compass(model, servo, 500);
 SerialLogger logger(model, 1000);
 
@@ -210,6 +211,7 @@ void setup() {
     // ToDo! remove sserial
     sserial.begin(9600);
     //servo.attach(11);
+    magnetometer.begin();
 }
 
 void loop() {
