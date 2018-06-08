@@ -3,7 +3,7 @@
 ## Tl;dr
 Connecting a megnetometer (compass), a gps module, and a servo to an Arduino. 
 
-![wiring sketch](wiring sketch_bb.png)
+![wiring sketch](wiring_sketch_bb.png)
 
 Servo (preferably with a big fat red arrow attached to it) points you towards your hotel, baked into the device as fixed gps coordinates.
 
