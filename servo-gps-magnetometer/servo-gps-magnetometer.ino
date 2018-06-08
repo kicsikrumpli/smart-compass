@@ -145,8 +145,6 @@ bool Compass::isCourseReady() {
 /*
  * Globals
  */
-//Corner Office
-//Coord destination(47.486533, 19.074511);
 //Statue of Liberty
 Coord destination(47.486681, 19.048306);
 
