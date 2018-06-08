@@ -126,7 +126,7 @@ void Compass::update() {
         if (servoAngle > servoMaxAngle) {
             servoAngle = servoMaxAngle;
         }
-        servo.write(servoAngle);
+        servo.write((servoAngle / 5) * 5);
     } else {
         wiggleDirection = -wiggleDirection;
         int wiggleAngle = 90 + wiggleDirection * wiggleAmplitude;

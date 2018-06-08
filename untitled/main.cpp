@@ -7,9 +7,9 @@ const int wiggleAmplitude = 15;
 void loop();
 
 int main() {
-    while (true) {
-        loop();
-    }
+    int angle = 93;
+    int stepped = (angle / 5) * 5;
+    std::cout << stepped ;
 }
 
 void loop() {
